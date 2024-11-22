@@ -113,7 +113,7 @@ with col2:
 
         if st.button("Generate Code"):
           #************ Call Main Function ***********
-          code_output=get_code_from_video(raw_video,api_key)
+          code_output=get_code_from_video(uploaded_video,api_key)
           st.write(code_output)
           
 
