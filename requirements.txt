@@ -1,1 +1,4 @@
 pandas
+time
+google-generativeai
+google-ai-generativelanguage
