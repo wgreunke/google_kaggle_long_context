@@ -1,6 +1,8 @@
 import streamlit as st
 import time
 import google.generativeai as genai
+api_key=st.secrets["api_key"]
+
 #May need to switch to an older version of python (3.10) to make this work.
 #https://github.com/google-gemini/generative-ai-python/issues/156
 #Managed in streamlit settings
@@ -80,7 +82,6 @@ def get_code_from_video(raw_video,api_key):
 
 
 
-
 #********************* UI ***************************
 st.title("Video to Code")
 
@@ -98,16 +99,32 @@ st.markdown("Upload an mp4 tutorial video then press generate code.  Google long
 uploaded_file=None
 uploaded_video=st.file_uploader("Choose a video",type=["mp4"])
 if uploaded_video is not None:
-    st.write("Video is uploaded")
-    #st.video(uploaded_video)
+  st.write("Video is uploaded")
+  #st.video(uploaded_video)
+    
 
 
-#************ Call Main Function ***********
-raw_video='/content/loading_indicator.mp4'
+#Use columns to control the size of the video
+col1,col2,col3=st.columns([3,3,3])
+with col2:
+    #Show the video player
+    if uploaded_video is not None:
+        st.video(uploaded_video)
 
-#code_output=get_code_from_video(raw_video,api_key)
-#print(code_output)
+        if st.button("Generate Code"):
+          #************ Call Main Function ***********
+          code_output=get_code_from_video(raw_video,api_key)
+          st.write(code_output)
+          
+
+
+st.markdown("Written by [Ward Greunke](https://www.linkedin.com/in/wgreunke/)", unsafe_allow_html=True) 
+st.markdown("Thanks to ?????? for the starter notebook. [Kaggle Competition](https://www.kaggle.com/competitions/gemini-long-context/overview)", unsafe_allow_html=True)
 
 
 
 
+
+
+
+  
