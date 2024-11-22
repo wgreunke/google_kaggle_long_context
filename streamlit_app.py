@@ -1,17 +1,90 @@
 import streamlit as st
-import pandas as pd
+import time
+import google.generativeai as genai
+#May need to switch to an older version of python (3.10) to make this work.
+#https://github.com/google-gemini/generative-ai-python/issues/156
+#Managed in streamlit settings
 
-#This is the function that calls the llm and generates the code.
-def generate_code_from_video(video_file):
-    llm_response="test"
-    return llm_response
+
+#************** Main Function *****************
+def get_code_from_video(raw_video,api_key):
+  genai.configure(api_key=api_key)
+
+  # ******** Helper Functions ******************
+  def upload_to_gemini(path, mime_type=None):
+    """Uploads the given file to Gemini.
+
+    See https://ai.google.dev/gemini-api/docs/prompting_with_media
+    """
+    file = genai.upload_file(path, mime_type=mime_type)
+    print(f"Uploaded file '{file.display_name}' as: {file.uri}")
+    return file
+
+  def wait_for_files_active(files):
+    """Waits for the given files to be active.
+
+    Some files uploaded to the Gemini API need to be processed before they can be
+    used as prompt inputs. The status can be seen by querying the file's "state"
+    field.
+
+    This implementation uses a simple blocking polling loop. Production code
+    should probably employ a more sophisticated approach.
+    """
+    print("Waiting for file processing...")
+    for name in (file.name for file in files):
+      file = genai.get_file(name)
+      while file.state.name == "PROCESSING":
+        print(".", end="", flush=True)
+        time.sleep(10)
+        file = genai.get_file(name)
+      if file.state.name != "ACTIVE":
+        raise Exception(f"File {file.name} failed to process")
+    print("...all files ready")
+    print()
+
+
+
+  # Create the model
+  generation_config = {
+    "temperature": 1,
+    "top_p": 0.95,
+    "top_k": 64,
+    "max_output_tokens": 8192,
+    "response_mime_type": "text/plain",
+  }
+
+  model = genai.GenerativeModel(
+    model_name="gemini-1.5-flash",
+    generation_config=generation_config,
+  )
+
+
+  #Start the chat
+  files = [upload_to_gemini(raw_video, mime_type="video/webm"),]
+  wait_for_files_active(files)
+
+  chat_session = model.start_chat(
+    history=[
+      {
+        "role": "user",
+        "parts": [
+          files[0],
+        ],
+      }
+    ]
+  )
+
+  response = chat_session.send_message("Please output the code that is shown in this video")
+  return response.text
+
+
 
 
 
 #********************* UI ***************************
 st.title("Video to Code")
 
-st.header("Stop pressing pause to copy code from video!")
+st.header("Stop pausing video to copy code!")
 
 st.markdown("This project was part of the Google Gemini Long Context [Kaggle Competition](https://www.kaggle.com/competitions/gemini-long-context/overview)", unsafe_allow_html=True)
 
@@ -29,24 +102,12 @@ if uploaded_video is not None:
     #st.video(uploaded_video)
 
 
-#Use columns to control the size of the video
-col1,col2,col3=st.columns([3,3,3])
+#************ Call Main Function ***********
+raw_video='/content/loading_indicator.mp4'
 
-with col2:
-    
-    #Show the video player
-    if uploaded_video is not None:
-        st.video(uploaded_video)
-
-        if st.button("Generate Code"):
-            st.write(generate_code_from_video(uploaded_video))
-        
+#code_output=get_code_from_video(raw_video,api_key)
+#print(code_output)
 
 
-
-
-
-st.markdown("Written by [Ward Greunke](https://www.linkedin.com/in/wgreunke/)", unsafe_allow_html=True) 
-st.markdown("Thanks to ?????? for the starter notebook. [Kaggle Competition](https://www.kaggle.com/competitions/gemini-long-context/overview)", unsafe_allow_html=True)
 
 
