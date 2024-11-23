@@ -3,7 +3,7 @@ import time
 import google.generativeai as genai
 api_key=st.secrets["api_key"]
 
-#May need to switch to an older version of python (3.10) to make this work.
+#Need to switch to an older version of python (3.10) to make the Google generativeai library work. 
 #https://github.com/google-gemini/generative-ai-python/issues/156
 #Managed in streamlit settings
 
@@ -43,7 +43,6 @@ def get_code_from_video(raw_video,api_key):
         raise Exception(f"File {file.name} failed to process")
     print("...all files ready")
     print()
-
 
 
   # Create the model
@@ -113,6 +112,7 @@ with col2:
   
 if st.button("Generate Code"):
   #************ Call Main Function ***********
+  st.write("Please wait, video is being processed by Gemini")
   code_output=get_code_from_video(uploaded_video,api_key)
   st.write(code_output)
         
