@@ -110,13 +110,12 @@ with col2:
     #Show the video player
     if uploaded_video is not None:
         st.video(uploaded_video)
-
-        if st.button("Generate Code"):
-          #************ Call Main Function ***********
-          code_output=get_code_from_video(uploaded_video,api_key)
-          st.write(code_output)
-          
-
+  
+if st.button("Generate Code"):
+  #************ Call Main Function ***********
+  code_output=get_code_from_video(uploaded_video,api_key)
+  st.write(code_output)
+        
 
 st.markdown("Written by [Ward Greunke](https://www.linkedin.com/in/wgreunke/)", unsafe_allow_html=True) 
 st.markdown("Thanks to ?????? for the starter notebook. [Kaggle Competition](https://www.kaggle.com/competitions/gemini-long-context/overview)", unsafe_allow_html=True)
