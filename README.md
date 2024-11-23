@@ -1,5 +1,7 @@
 # Code from Video 
-This project extracts the code from video tutorials so you can run the code yourself.
+This project extracts the code from video tutorials so you can run the code yourself.  This project was part of the Google Gemini Long Context Kaggle Competition.  https://www.kaggle.com/competitions/gemini-long-context/overview/citation 
+
+Code was based on a public notebook provided by Paul Mooney: https://www.kaggle.com/code/paultimothymooney/how-to-upload-large-files-to-gemini-1-5
 
 Created by Ward Greunke - https://www.linkedin.com/feed/
 
