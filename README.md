@@ -1,9 +1,7 @@
 # Code from Video 
 This project extracts the code from video tutorials so you can run the code yourself.  This project was part of the Google Gemini Long Context Kaggle Competition.  https://www.kaggle.com/competitions/gemini-long-context/overview/citation 
 
-Code was based on a public notebook provided by Paul Mooney: https://www.kaggle.com/code/paultimothymooney/how-to-upload-large-files-to-gemini-1-5
-
-Created by Ward Greunke - https://www.linkedin.com/feed/
+Created by [Ward Greunke](https://www.linkedin.com/in/wgreunke/)
 
 ## Go to Streamlit Application:
 https://video-code.streamlit.app/
@@ -16,3 +14,6 @@ For testing purposes, a YouTube video was played on Windows 11 using Edge, recor
 For the project final project video, two files were used from YouTube:
 1.  I Create Dashboard in One Minute using Python | Python for beginners https://www.youtube.com/watch?v=zvDvixsjOS8
 2. 
+
+
+Based on a public notebook provided by [Paul Mooney:](https://www.kaggle.com/code/paultimothymooney/how-to-upload-large-files-to-gemini-1-5)
