@@ -63,7 +63,7 @@ def get_code_from_video(raw_video,api_key):
   #Start the chat
   files = [upload_to_gemini(raw_video, mime_type="video/mp4"),]
   wait_for_files_active(files)
-  st.write(f"Files: {files}")
+  #st.write(f"Files: {files}")
   chat_session = model.start_chat(
     history=[
       {
