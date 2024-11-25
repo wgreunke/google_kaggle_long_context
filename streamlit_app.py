@@ -116,9 +116,10 @@ if st.button("Generate Code"):
   code_output=get_code_from_video(uploaded_video,api_key)
   st.write(code_output)
         
-
+st.divider() 
 st.markdown("Written by [Ward Greunke](https://www.linkedin.com/in/wgreunke/)", unsafe_allow_html=True) 
-st.markdown("Thanks to ?????? for the starter notebook. [Kaggle Competition](https://www.kaggle.com/competitions/gemini-long-context/overview)", unsafe_allow_html=True)
+st.markdown("Based on the starter notebook by [Paul Mooney](https://www.kaggle.com/code/paultimothymooney/how-to-upload-large-files-to-gemini-1-5)", unsafe_allow_html=True)
+
 
 
 
